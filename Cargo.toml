@@ -1,0 +1,7 @@
+[package]
+name = "crusader"
+version = "0.1.0"
+authors = ["LincolnFaradey <lyfaradey@yahoo.com>"]
+
+[dependencies]
+byteorder = "0.5.2"
