@@ -2,16 +2,18 @@ extern crate byteorder;
 
 use self::byteorder::{ByteOrder, BigEndian};
 
+const SIZE: usize = 8;
+
 #[derive(Debug)]
 pub struct Message {
-    header: [u8; 4],
+    header: [u8; SIZE],
     content: Vec<u8>,
 }
 
 impl Message {
     pub fn new(content: &Vec<u8>) -> Message {
-    	let mut buf = [0u8; 4];
-    	BigEndian::write_u32(&mut buf, (content.len() as u32));
+    	let mut buf = [0u8; SIZE];
+    	BigEndian::write_u64(&mut buf, (content.len() as u64));
     	return Message {
     		header: buf,
     		content: content.clone(),
