@@ -1,6 +1,6 @@
 mod chat;
 
-use chat::message::Message;
+use chat::message::{Message, Kind};
 use chat::chatter::Postman;
 use std::io;
 
@@ -15,7 +15,7 @@ fn main() {
         io::stdin().read_line(&mut line)
             .expect("Failed to read line");
 
-        let m = Message::new(&line.into_bytes());
+        let m = Message::new(Kind::Text, &line.into_bytes());
         pm.send(m);
         
 
