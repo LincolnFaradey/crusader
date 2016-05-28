@@ -6,7 +6,7 @@ use chat::chatter::Postman;
 use std::io;
 
 // const HOST: &'static str = "178.62.229.44:8080";
-const HOST: &'static str = "178.62.229.44:8080";
+const HOST: &'static str = "127.0.0.1:8080";
 
 fn main() {
     let mut pm = Postman::new(HOST).unwrap();
@@ -24,27 +24,22 @@ fn main() {
 
         let msg = pm.receive();
 
-        if msg.kind() == &Kind::Debug {
-            continue;
-        }
-
         match msg.kind() {
             &Kind::Text => {
-                print!("@Response:\n\t{}", msg.to_string());
+                println!("@Response:\n\t{}", msg.to_string());
             },
             &Kind::File => {
                 // TODO: needs to be implemented 
-                // - [header][kind][----FILE----][filename] 
-                // - filename might go right after the kind.
+                // - [header[kind][filename length][filename]][----FILE----][filename] 
             },
             &Kind::Info => {
-                println!("==Info: =={}==", msg.to_string());
+                println!("\t\t==Info: =={}==", msg.to_string());
             },
             &Kind::Debug => {
                 // TODO: needs to be implemented
                 // if the -d flag passed to the program
                 // Degug should be written in a file
-                println!("||Debug: ||{}||", msg.to_string()); 
+                println!("\t\t||Debug: ||{}||", msg.to_string()); 
             }
         }
     }
