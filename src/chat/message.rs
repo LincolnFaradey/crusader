@@ -1,14 +1,9 @@
 extern crate byteorder;
 
 use self::byteorder::{ByteOrder, BigEndian};
+use chat::kind::Kind;
 
 const SIZE: usize = 8;
-
-#[derive(Debug)]
-pub enum Kind {
-    Text = 0,
-    File,
-}
 
 #[derive(Debug)]
 pub struct Message {
@@ -19,37 +14,34 @@ pub struct Message {
 
 impl Message {
     pub fn new(kind: Kind, content: &Vec<u8>) -> Message {
-    	let mut header = [0u8; SIZE];
-    	BigEndian::write_u64(&mut header, (content.len() as u64));
+        let mut header = [0u8; SIZE];
+        BigEndian::write_u64(&mut header, (content.len() as u64));
 
-    	Message {
+        Message {
             kind: kind,
-    		header: header,
-    		content: content.clone(),
-    	}
-    }
-
-    pub fn get_content(&self) -> Vec<u8> {
-        self.content.clone()
-    }
-
-    pub fn get_u8_kind(&self) -> u8 {
-        match self.kind {
-            Kind::Text => 0u8,
-            Kind::File => 1u8,
+            header: header,
+            content: content.clone(),
         }
     }
 
-    pub fn get_header(&self) -> [u8; SIZE] {
+    pub fn content(&self) -> Vec<u8> {
+        self.content.clone()
+    }
+
+    pub fn kind(&self) -> &Kind {
+        &self.kind
+    }
+
+    pub fn header(&self) -> [u8; SIZE] {
         self.header.clone()
     }
 }
 
 impl ToString for Message {
     fn to_string(&self) -> String {
-    	match String::from_utf8(self.content.clone()) {
-    		Ok(val) => val,
-    		Err(_) => String::from(""),
-    	}
+        match String::from_utf8(self.content.clone()) {
+            Ok(val) => val,
+            Err(_) => String::from(""),
+        }
     }
 }

@@ -1,6 +1,7 @@
 mod chat;
 
-use chat::message::{Message, Kind};
+use chat::message::Message;
+use chat::kind::Kind;
 use chat::chatter::Postman;
 use std::io;
 
@@ -14,13 +15,37 @@ fn main() {
         println!("Please Enter some text:");
 
         let mut line = String::new();
-        io::stdin().read_line(&mut line)
+        io::stdin()
+            .read_line(&mut line)
             .expect("Failed to read line");
 
         let msg = Message::new(Kind::Text, &line.into_bytes());
         pm.send(msg);
-        
-        let v = pm.receive();
-        print!("{}", v.to_string());
+
+        let msg = pm.receive();
+
+        if msg.kind() == &Kind::Debug {
+            continue;
+        }
+
+        match msg.kind() {
+            &Kind::Text => {
+                print!("@Response:\n\t{}", msg.to_string());
+            },
+            &Kind::File => {
+                // TODO: needs to be implemented 
+                // - [header][kind][----FILE----][filename] 
+                // - filename might go right after the kind.
+            },
+            &Kind::Info => {
+                println!("==Info: =={}==", msg.to_string());
+            },
+            &Kind::Debug => {
+                // TODO: needs to be implemented
+                // if the -d flag passed to the program
+                // Degug should be written in a file
+                println!("||Debug: ||{}||", msg.to_string()); 
+            }
+        }
     }
 }
