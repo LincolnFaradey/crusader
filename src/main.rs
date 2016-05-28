@@ -4,7 +4,8 @@ use chat::message::{Message, Kind};
 use chat::chatter::Postman;
 use std::io;
 
-const HOST: &'static str = "178.62.229.44:8080";
+// const HOST: &'static str = "178.62.229.44:8080";
+const HOST: &'static str = "127.0.0.1:8080";
 
 fn main() {
     let mut pm = Postman::new(HOST).unwrap();
@@ -18,7 +19,6 @@ fn main() {
         let m = Message::new(Kind::Text, &line.into_bytes());
         pm.send(m);
         
-
         let v = pm.receive();
         print!("{}", v.to_string());
     }
