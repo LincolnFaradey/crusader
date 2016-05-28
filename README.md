@@ -1,6 +1,7 @@
-*Crusader*
-![Crusader](http://s33.postimg.org/45ujghrgv/dark_warrior_sword_crusader_skull_158258.jpg)
+#Crusader
 _Crusader is a project with an emphasis on console mode chatting_
+
+![](http://s33.postimg.org/45ujghrgv/dark_warrior_sword_crusader_skull_158258.jpg)
 
 The main goal is to give an opportunity to communicate with others not leaving
 the pretty nice console environment. Screw those shiny cool messengers, 
