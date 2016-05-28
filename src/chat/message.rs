@@ -19,13 +19,12 @@ pub struct Message {
 
 impl Message {
     pub fn new(kind: Kind, content: &Vec<u8>) -> Message {
-    	let mut buf = [0u8; SIZE];
-        // println!("{:?}", Kind::File as i32);
-    	BigEndian::write_u64(&mut buf, (content.len() as u64));
+    	let mut header = [0u8; SIZE];
+    	BigEndian::write_u64(&mut header, (content.len() as u64));
 
     	Message {
             kind: kind,
-    		header: buf,
+    		header: header,
     		content: content.clone(),
     	}
     }
