@@ -5,8 +5,8 @@ use chat::kind::Kind;
 use chat::chatter::Postman;
 use std::io;
 
-// const HOST: &'static str = "178.62.229.44:8080";
-const HOST: &'static str = "127.0.0.1:8080";
+const HOST: &'static str = "178.62.229.44:8080";
+// const HOST: &'static str = "127.0.0.1:8080";
 
 fn main() {
     let mut pm = Postman::new(HOST).unwrap();
@@ -30,7 +30,7 @@ fn main() {
             },
             &Kind::File => {
                 // TODO: needs to be implemented 
-                // - [header[kind][filename length][filename]][----FILE----][filename] 
+                // - [header[kind][filename length][filename]][----FILE----]
             },
             &Kind::Info => {
                 println!("\t\t==Info: =={}==", msg.to_string());
