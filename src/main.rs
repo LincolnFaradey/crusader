@@ -9,11 +9,12 @@ const HOST: &'static str = "178.62.229.44:8080";
 // const HOST: &'static str = "127.0.0.1:8080";
 
 fn main() {
+    println!("Welcome to Rust chat client \"Crusader!\"");
+    print!("Write --help to see all commands\n");
+
     let mut pm = Postman::new(HOST).unwrap();
-
     loop {
-        println!("Please Enter some text:");
-
+        println!(">>");
         let mut line = String::new();
         io::stdin()
             .read_line(&mut line)
@@ -21,26 +22,28 @@ fn main() {
 
         let msg = Message::new(Kind::Text, &line.into_bytes());
         pm.send(msg);
-
+        println!("<<");
         let msg = pm.receive();
+
 
         match msg.kind() {
             &Kind::Text => {
                 println!("@Response:\n\t{}", msg.to_string());
-            },
+            }
             &Kind::File => {
                 // TODO: needs to be implemented 
                 // - [header[kind][filename length][filename]][----FILE----]
-            },
+            }
             &Kind::Info => {
                 println!("\t\t==Info: =={}==", msg.to_string());
-            },
+            }
             &Kind::Debug => {
                 // TODO: needs to be implemented
                 // if the -d flag passed to the program
                 // Degug should be written in a file
-                println!("\t\t||Debug: ||{}||", msg.to_string()); 
+                println!("\t\t||Debug: ||{}||", msg.to_string());
             }
         }
+
     }
 }
